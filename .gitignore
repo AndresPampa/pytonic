@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# IDE / editor(optional)
+.idea/
+.vscode/
+*.swp
+
+# OS(optional)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Entorno / secretos(optional)
+.env
+.env.*
+
+# Testing / coverage(optional)
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
