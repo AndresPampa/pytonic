@@ -3,20 +3,58 @@ class Car:
     #Es un metodo de inicializacion
     #self es una referencia a la instancia de la clase
     #manufacturer, model, cylinder son los parametros del constructor y por lo tanto son atributos de la clase
-    def __init__(self, manufacturer=None, model=None, color='', cylinder=0.00) -> None:
+    def __init__(
+        self, 
+        manufacturer:str | None = None, 
+        model:str | None=None, 
+        color:str | None='', 
+        cylinder:float | None=0.00,
+        tank_capacity:float | None=40.00
+    ) -> None:
         #cuando comienza con un guion bajo es protegido y con doble guion bajo es privado
         self.__manufacturer = manufacturer #Atributo privado va con doble guion bajo
         self.__model = model
         self.__color = color
         self.__cylinder = cylinder
         self._other = 'motor' #Atributo protegido va con un guion bajo
+        self.__tank_capacity = 40
+
+    #en python no existe la sobrecarga de constructores, por lo que no se puede tener diferentes constructores para diferentes tipos de datos
+    #para eso se puede usar el patron de diseño factory
+    #factory es un patron de diseño que se encarga de crear objetos de una clase
+    #factory es un patron de diseño que se encarga de crear objetos de una clase
+    @classmethod
+    def empty(cls) -> str:
+        return cls() #invocamos el constructor de la clase vacio
+
+    @classmethod
+    def basic(cls, manufacturer:str, model:str) -> str:
+        return cls(manufacturer=manufacturer, model=model) #invocamos el constructor de la clase con solo dos parametros
+
+    @classmethod
+    def with_color(cls, manufacturer:str, model:str, color:str) -> str:
+        return cls(manufacturer=manufacturer, model=model, color=color) #invocamos el constructor de la clase con solo tres parametros
     
+    @classmethod
+    def only_color(cls, manufacturer:str, color:str) -> str:
+        return cls(manufacturer=manufacturer, model=None, color=color)
+    
+    @classmethod
+    def only_cylinder(cls, manufacturer:str, cylinder:float) -> str:
+        return cls(manufacturer=manufacturer, model=None, color=None, cylinder=cylinder)
+    
+    @classmethod
+    def only_tank_capacity(cls, manufacturer:str, tank_capacity:float) -> str:
+        return cls(manufacturer=manufacturer, model=None, color=None, cylinder=None, tank_capacity=tank_capacity)
+    
+    #----------------------------------------------#
     #Metodos getters y setters
     # def get_model(self) -> str:
     #     return self.__model
 
     # def set_model(self, model: str) -> None:
     #     self.__model = model
+    #----------------------------------------------#
 
     def get_color(self) -> str:
         return self.__color
@@ -50,10 +88,28 @@ class Car:
     def details(self) -> str:
         return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other}"
 
+    #metodo para acelerar el auto
+    def accelerate(self, rpm:int, speed:int) -> str:
+        return f'El auto {self.__manufacturer} acelera a {rpm} y a {speed} km/h'
+
+    def brake(self) -> str:
+        return f'El auto {self.__manufacturer} {self.__model} frenando!!'
+    
+    def accelerate_n_brake(self, rpm:int, speed:int) -> str:
+        accelerating = self.accelerate(rpm, speed)
+        braking = self.brake()
+        return f'{accelerating} and {braking}'
+    
+    def calculate_consumption(self, km:int, fuel_percentage:float) -> float:
+        if isinstance(fuel_percentage, int):
+            fuel_percentage = fuel_percentage/100.00
+        return km/(fuel_percentage * self.__tank_capacity)
+
+
     #metodo str --> se ejecuta cuando se imprime el objeto
     def __str__(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity}"
 
     #metodo repr --> se ejecuta cuando se imprime el objeto en consola y sirve para debugging
     def __repr__(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity}"
