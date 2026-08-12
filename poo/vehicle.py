@@ -1,6 +1,6 @@
 class Vehicle:
 
-    def __init__(self, *args) -> None:
+    def __init__(self, *args, **kwargs) -> None:
         self.manufacturer = None
         self.model = None
         self.color = None
@@ -10,6 +10,25 @@ class Vehicle:
         args_names = ['manufacturer', 'model', 'color', 'cylinder', 'tank_capacity']
         for name, value in zip(args_names, args):
             setattr(self, name, value)
+
+        if len(kwargs) > 0:
+            for key, value in kwargs.items():
+                if key in args_names:
+                    setattr(self, key, value)
+                else:
+                    raise TypeError(f"Invalid argument: {key}")
+
+            # if 'manufacturer' in args_names:
+            #     self.manufacturer = kwargs.get('manufacturer')
+            # if 'model' in args_names:
+            #     self.model = kwargs.get('model')
+            # if 'color' in args_names:
+            #     self.color = kwargs.get('color')
+            # if 'cylinder' in args_names:
+            #     self.cylinder = kwargs.get('cylinder')
+            # if 'tank_capacity' in args_names:
+            #     self.tank_capacity = kwargs.get('tank_capacity')
+            
 
         # total = len(args)
         # if total == 0:
