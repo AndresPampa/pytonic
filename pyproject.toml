@@ -5,3 +5,11 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = []
+
+[tool.ruff.lint]
+select = ["E", "F"]
+ignore = [
+    "E501",   # líneas largas
+    "I001",   # imports sin ordenar
+    "DTZ003", # datetime.now() sin timezone
+]
