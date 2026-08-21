@@ -1,3 +1,7 @@
+from typing import Final
+from color import Color
+from car_type import CarType
+
 class Car:
     #Constructor: metodo que se ejecuta cuando se crea una instancia de la clase
     #Es un metodo de inicializacion
@@ -11,11 +15,19 @@ class Car:
     #__license_plate_color = 'Orange' # --> con doble guion bajo es privado con un guion bajo es protegido
     last_id = 0 #atributo estatico que se incrementa cada vez que se crea una instancia de la clase
 
+    #static Final =Atributos constantes que no se pueden modificar
+    MAX_SPEED_HIGHWAY: Final[int] = 120
+    COLOR_RED:Final[str] = 'Red'
+    COLOR_WHITE: Final[str] = 'Blanco'
+    COLOR_GREY: Final[str] = 'Gris'
+    COLOR_BLUE: Final[str] = 'Azul'
+    COLOR_PURPLE: Final[str] = 'Purpura'
+
     def __init__(
         self, 
         manufacturer:str | None = None, 
         model:str | None=None, 
-        color:str | None='', 
+        color:str | Color | None='', 
         cylinder:float | None=0.00,
         tank_capacity:float | None=40.00
     ) -> None:
@@ -28,6 +40,7 @@ class Car:
         self.__cylinder = cylinder
         self._other = 'motor' #Atributo protegido va con un guion bajo
         self.__tank_capacity = 40
+        self.__car_type: CarType | None = None
 
     #en python no existe la sobrecarga de constructores, por lo que no se puede tener diferentes constructores para diferentes tipos de datos
     #para eso se puede usar el patron de diseño factory
@@ -125,6 +138,14 @@ class Car:
     def model(self, model: str) -> None:
         self.__model = model
 
+    @property
+    def car_type(self) -> CarType:
+        return self.__car_type
+    
+    @car_type.setter
+    def car_type(self, car_type: CarType) -> None:
+        self.__car_type = car_type
+
     def details(self) -> str:
         return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} license_plate_color: {Car.license_plate_color} id: {self.__id}"
 
@@ -148,9 +169,9 @@ class Car:
 
     #metodo str --> se ejecuta cuando se imprime el objeto
     def __str__(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity} license_plate_color: {Car.license_plate_color} id: {self.__id}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity} license_plate_color: {Car.license_plate_color} id: {self.__id} car_type: {self.__car_type}"
 
     #metodo repr --> se ejecuta cuando se imprime el objeto en consola y sirve para debugging
     def __repr__(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity} license_plate_color: {Car.license_plate_color} id: {self.__id}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity} license_plate_color: {Car.license_plate_color} id: {self.__id} car_type: {self.__car_type}"
     

@@ -1,13 +1,12 @@
 from car import Car
-
 from datetime import datetime, timezone
 
 
-car1 = Car.full_spec(manufacturer='mazda',model='3', color=None, cylinder=None, tank_capacity=34.00)
+car1 = Car.full_spec(manufacturer='mazda',model='3', color=Car.COLOR_RED, cylinder=None, tank_capacity=34.00)
 Car.license_plate_color = 'Red' #se puede cambiar el atributo estatico de la clase desde la instancia, solo desde la clase
 print(car1)
 
-car2 = Car.full_spec(manufacturer='mazda',model='3', color=None, cylinder=None, tank_capacity=34.00)
+car2 = Car.full_spec(manufacturer='mazda',model='3', color=Car.COLOR_PURPLE, cylinder=None, tank_capacity=34.00)
 print(car2)
 
 car3 = car1
@@ -24,5 +23,11 @@ print(car1 == date_now) #False
 car1.set_license_plate_color('Blue')
 print(car1.get_license_plate_color())
 
-car4 = Car.full_spec(manufacturer='mazda',model='4', color='White', cylinder=None, tank_capacity=65.00)
+car4 = Car.full_spec(manufacturer='mazda',model='4', color=Car.COLOR_WHITE, cylinder=None, tank_capacity=65.00)
 print(car4)
+
+speed_highway = Car.MAX_SPEED_HIGHWAY
+print("speed_highway:",speed_highway)
+
+Car.MAX_SPEED_HIGHWAY = 240
+print("speed_highway:", Car.MAX_SPEED_HIGHWAY)
