@@ -1,7 +1,8 @@
 from enum import Enum
 
 class CarType(Enum):
-    
+    #Los enum en python son iterables
+    #los enum son constantes, por lo que no se pueden cambiar
     SEDAN: tuple[str, str, int] = ('Sedan', 'Auto Mediano', 4)
     SUV: tuple[str, str, int] = ('SUV', 'Auto Grande', 4)
     PICKUP: tuple[str, str, int] = ('Pickup', 'Auto Grande', 4)

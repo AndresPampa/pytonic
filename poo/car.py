@@ -1,6 +1,10 @@
-from typing import Final
+from typing import Final, Optional, List
 from color import Color
 from car_type import CarType
+from engine import Engine
+from fuel_tank import FuelTank
+from person import Person
+from wheel import Wheel
 
 class Car:
     #Constructor: metodo que se ejecuta cuando se crea una instancia de la clase
@@ -28,8 +32,10 @@ class Car:
         manufacturer:str | None = None, 
         model:str | None=None, 
         color:str | Color | None='', 
-        cylinder:float | None=0.00,
-        tank_capacity:float | None=40.00
+        engine:Optional[Engine] | None = None,
+        fuel_tank:Optional[FuelTank] | None = None,
+        driver: Optional[Person] | None = None,
+        wheels: List[Wheel] = []
     ) -> None:
         #cuando comienza con un guion bajo es protegido y con doble guion bajo es privado
         self.__id = Car.last_id + 1
@@ -37,14 +43,17 @@ class Car:
         self.__manufacturer = manufacturer #Atributo privado va con doble guion bajo
         self.__model = model
         self.__color = color
-        self.__cylinder = cylinder
+        # self.__cylinder = cylinder
+        self.__engine = engine
         self._other = 'motor' #Atributo protegido va con un guion bajo
-        self.__tank_capacity = 40
-        self.__car_type: CarType | None = None
+        # self.__tank_capacity = 40
+        self.__fuel_tank = fuel_tank
+        self.__car_type: Optional[CarType] | None = None
+        self.__driver = driver
+        self.__wheels = wheels
 
     #en python no existe la sobrecarga de constructores, por lo que no se puede tener diferentes constructores para diferentes tipos de datos
     #para eso se puede usar el patron de diseño factory
-    #factory es un patron de diseño que se encarga de crear objetos de una clase
     #factory es un patron de diseño que se encarga de crear objetos de una clase
     @classmethod
     def empty(cls) -> str:
@@ -63,16 +72,16 @@ class Car:
         return cls(manufacturer=manufacturer, model=None, color=color)
     
     @classmethod
-    def only_cylinder(cls, manufacturer:str, cylinder:float) -> str:
-        return cls(manufacturer=manufacturer, model=None, color=None, cylinder=cylinder)
+    def only_engine(cls, manufacturer:str, engine:Optional[Engine] | None = None) -> str:
+        return cls(manufacturer=manufacturer, model=None, color=None, engine=engine)
     
     @classmethod
-    def only_tank_capacity(cls, manufacturer:str, tank_capacity:float) -> str:
-        return cls(manufacturer=manufacturer, model=None, color=None, cylinder=None, tank_capacity=tank_capacity)
+    def only_fuel_tank(cls, manufacturer:str, fuel_tank:Optional[FuelTank] | None = None) -> str:
+        return cls(manufacturer=manufacturer, model=None, color=None, engine=None, fuel_tank=fuel_tank)
     
     @classmethod
-    def full_spec(cls, manufacturer:str, model:str, color:str, cylinder:float, tank_capacity:float) -> str:
-        return cls(manufacturer=manufacturer, model=model, color=color, cylinder=cylinder, tank_capacity=tank_capacity)
+    def full_spec(cls, manufacturer:str, model:str, color:str, engine:Optional[Engine] | None = None, fuel_tank:Optional[FuelTank] | None = None) -> str:
+        return cls(manufacturer=manufacturer, model=model, color=color, engine=engine, fuel_tank=fuel_tank)
     
     @classmethod
     def set_license_plate_color(cls, color:str) -> None:
@@ -94,11 +103,9 @@ class Car:
         return self.__model == other.__model \
                 and self.__manufacturer == other.__manufacturer \
                 and self.__color == other.__color \
-                and self.__cylinder == other.__cylinder \
-                and self.__tank_capacity == other.__tank_capacity \
+                and self.__engine == other.__engine \
+                and self.__fuel_tank == other.__fuel_tank \
                 and self._other == other._other
-    
-
     
     #----------------------------------------------#
     #Metodos getters y setters
@@ -123,12 +130,12 @@ class Car:
 
     #Propiedad cylinder y setter --> otro metodo para acceder a los atributos privados
     @property
-    def cylinder(self) -> float:
-        return self.__cylinder
+    def engine(self) -> float:
+        return self.__engine
     
-    @cylinder.setter
-    def cylinder(self, cylinder: float) -> None:
-        self.__cylinder = cylinder
+    @engine.setter
+    def engine(self, engine: Engine) -> None:
+        self.__engine = engine
 
     @property
     def model(self) -> str:
@@ -146,8 +153,39 @@ class Car:
     def car_type(self, car_type: CarType) -> None:
         self.__car_type = car_type
 
+    @property
+    def fuel_tank(self) -> FuelTank:
+        return self.__fuel_tank
+    
+    @fuel_tank.setter
+    def fuel_tank(self, fuel_tank: FuelTank) -> None:
+        self.__fuel_tank = fuel_tank
+
+    @property
+    def driver(self) -> Person:
+        return self.__driver
+    
+    @driver.setter
+    def driver(self, driver: Person) -> None:
+        self.__driver = driver
+
+    @property
+    def wheels(self) -> List[Wheel]:
+        return self.__wheels
+    
+    @wheels.setter
+    def wheels(self, wheels: List[Wheel]) -> None:
+        self.__wheels = wheels
+
+    def add_wheel(self, wheel: Wheel) -> 'Car': #se usa el tipo 'Car' para indicar que el metodo retorna una instancia de la clase Car
+        self.__wheels.append(wheel)
+        return self #Esto se llama chaining y es una tecnica de programacion que permite encadenar metodos de una clase
+        #esto es util para encadenar metodos de una clase y para hacer mas legible el codigo
+        #por ejemplo: car.add_wheel(Wheel(manufacturer="Michelin", rim_size=16, width=20)).add_wheel(Wheel(manufacturer="Michelin", rim_size=16, width=20)).add_wheel(Wheel(manufacturer="Michelin", rim_size=16, width=20))
+        #esto es util para encadenar metodos de una clase y para hacer mas legible el codigo
+
     def details(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} license_plate_color: {Car.license_plate_color} id: {self.__id}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, engine: {self.__engine} fuel_tank: {self.__fuel_tank} other: {self._other} license_plate_color: {Car.license_plate_color} id: {self.__id} driver: {self.__driver} wheels: {self.__wheels}"
 
     #metodo para acelerar el auto
     def accelerate(self, rpm:int, speed:int) -> str:
@@ -164,14 +202,16 @@ class Car:
     def calculate_consumption(self, km:int, fuel_percentage:float) -> float:
         if isinstance(fuel_percentage, int):
             fuel_percentage = fuel_percentage/100.00
-        return km/(fuel_percentage * self.__tank_capacity)
+        return km/(fuel_percentage * self.__fuel_tank.capacity)
 
 
     #metodo str --> se ejecuta cuando se imprime el objeto
     def __str__(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity} license_plate_color: {Car.license_plate_color} id: {self.__id} car_type: {self.__car_type}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, engine: {self.__engine} other: {self._other} fuel_tank: {self.__fuel_tank} license_plate_color: {Car.license_plate_color} id: {self.__id} car_type: {self.__car_type} driver: {self.__driver} wheels: {self.__wheels}"
 
     #metodo repr --> se ejecuta cuando se imprime el objeto en consola y sirve para debugging
     def __repr__(self) -> str:
-        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, cylinder: {self.__cylinder} other: {self._other} tank_capacity: {self.__tank_capacity} license_plate_color: {Car.license_plate_color} id: {self.__id} car_type: {self.__car_type}"
+        return f"manufacturer: {self.__manufacturer}, model: {self.__model}, color: {self.__color}, engine: {self.__engine} other: {self._other} fuel_tank: {self.__fuel_tank} license_plate_color: {Car.license_plate_color} id: {self.__id} car_type: {self.__car_type} driver: {self.__driver} wheels: {self.__wheels}"
     
+    def __lt__(self, other) -> bool:
+        return self.__manufacturer  < other.__manufacturer #se compara el atributo manufacturer de la clase Car
