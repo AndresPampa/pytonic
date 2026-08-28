@@ -9,9 +9,9 @@ class Person:
         last_name: Optional[str] | None = None, 
         email: Optional[str] | None = None
     ):
-        self.first_name = None
-        self.last_name = None
-        self.email = None
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
     
     # @property
     # def first_name(self):
