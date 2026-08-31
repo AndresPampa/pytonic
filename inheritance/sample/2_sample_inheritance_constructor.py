@@ -9,6 +9,11 @@ def print_person(person:Person):
     print('Imprimiendo datos en comun del tipo Persona'.center(50, "-"))
     print(f'person.first_name: {person.first_name} - person.last_name: {person.last_name} - person.email: {person.email}')
     print("".center(50, "-"))
+    print("Instancias de las clases".center(50, "="))
+    print("SOBREESCRITURA DE METODO SPEAK".center(50, "="))
+    print(person.speak())
+    print("SOBREESCRITURA DE METODO GREET".center(50, "="))
+    print(person.greet())
     if isinstance(person, Student):
         print('Imprimiendo datos del tipo Estudiante'.center(50, "-"))
         print(f'Institucion: {person.institution}')
@@ -16,6 +21,8 @@ def print_person(person:Person):
         print(f'Promedio de lenguaje: {person.language_grade}')
         print(f'Promedio de historia: {person.history_grade}')
         print("".center(50, "-"))
+        print("SOBREESCRITURA DE METODO CALCULAR AVERAGE GRADE".center(50, "="))
+        print(f'Promedio general: {person.calcular_average_grade()}')
 
         if isinstance(person, InternationalStudent):
             print('Imprimiendo datos del tipo Estudiante Internacional'.center(50, "-"))
@@ -29,6 +36,7 @@ def print_person(person:Person):
         print("".center(50, "-"))
     else:
         print('No es un estudiante, profesor o estudiante internacional')
+
 
 student: Person = Student(
     first_name="Pampa", 
@@ -88,3 +96,4 @@ for person in persons:
     else:
         print("No es un estudiante")
         print_person(person)
+

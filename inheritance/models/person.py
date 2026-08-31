@@ -37,5 +37,8 @@ class Person:
     # def email(self, email):
     #     self._email = email
 
-    def speak(self):
-        print("Persona conversa un tema")
+    def speak(self) -> str:
+        return "Persona conversa un tema"
+
+    def greet(self) -> str:
+        return "Hola, como estas?"

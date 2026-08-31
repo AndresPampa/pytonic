@@ -27,5 +27,10 @@ class InternationalStudent(Student):
         self.country = country
         self.foreing_language_grade = foreing_language_grade
 
+    def greet(self) -> str:
+        # return super().greet()
+        return f"{super().greet()}, Soy un estudiante internacional"
 
-    
+    def calcular_average_grade(self) -> float:
+        base_average = super().calcular_average_grade()*3
+        return (base_average + self.foreing_language_grade) / 4
