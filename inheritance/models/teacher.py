@@ -13,6 +13,10 @@ class Teacher(Person):
     ):
         super().__init__(first_name, last_name, email)
         self.subject = subject
+    
+    def greet(self) -> str:
+        # return super().greet()
+        return f"{super().greet()}, Soy un profesor"
 
     # @property
     # def first_name(self):

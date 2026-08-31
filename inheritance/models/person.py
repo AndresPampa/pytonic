@@ -9,9 +9,9 @@ class Person:
         last_name: Optional[str] | None = None, 
         email: Optional[str] | None = None
     ):
-        self.first_name = None
-        self.last_name = None
-        self.email = None
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
     
     # @property
     # def first_name(self):
@@ -37,5 +37,8 @@ class Person:
     # def email(self, email):
     #     self._email = email
 
-    def speak(self):
-        print("Persona conversa un tema")
+    def speak(self) -> str:
+        return "Persona conversa un tema"
+
+    def greet(self) -> str:
+        return "Hola, como estas?"
