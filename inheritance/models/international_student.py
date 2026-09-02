@@ -34,3 +34,6 @@ class InternationalStudent(Student):
     def calcular_average_grade(self) -> float:
         base_average = super().calcular_average_grade()*3
         return (base_average + self.foreing_language_grade) / 4
+    
+    def __str__(self) -> str:
+        return super().__str__() + f'\n Pais: {self.country} \n Promedio de lenguaje extranjero: {self.foreing_language_grade}'

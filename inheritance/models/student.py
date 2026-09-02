@@ -31,3 +31,7 @@ class Student(Person):
 
     def calcular_average_grade(self) -> float:
         return (self.math_grade + self.language_grade + self.history_grade) / 3
+
+    def __str__(self) -> str:
+        return super().__str__() + f'\n Institucion: {self.institution} \n Promedio de matematicas: {self.math_grade} \n Promedio de lenguaje: {self.language_grade} \n Promedio de historia: {self.history_grade}'
+        
