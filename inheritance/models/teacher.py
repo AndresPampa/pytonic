@@ -18,6 +18,9 @@ class Teacher(Person):
         # return super().greet()
         return f"{super().greet()}, Soy un profesor"
 
+    def __str__(self) -> str:
+        return super().__str__() + f'\n Materia: {self.subject}'
+        
     # @property
     # def first_name(self):
     #     return self._first_name
