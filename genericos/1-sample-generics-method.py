@@ -2,7 +2,7 @@ from genericos.customer import Customer
 from typing import Any, Iterable, List, TypeVar
 
 
-T = TypeVar("T", bound=Customer) #T es un tipo generico que puede ser cualquier tipo que sea subclase de Customer
+T = TypeVar("T", bound=[Customer, int]) #T es un tipo generico que puede ser cualquier tipo que sea subclase de Customer
 #T es un tipo generico que puede ser cualquier tipo
 def from_array_to_list(items: Iterable[T]) -> List[T]:
     return list(items)
