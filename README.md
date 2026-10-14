@@ -37,6 +37,10 @@ uv run poo/1_car_sample.py
 uv run -m inheritance.sample.sample_inheritance
 uv run -m abstract_class.form.1_sample_form_element
 uv run -m abstract_class.form.2_sample_form_validator
+uv run genericos/1-sample-generics-method.py
+uv run genericos/1-sample-track-generics.py
+uv run thread/bakery/sample-bakery.py
+uv run thread/timer/sample_timer.py
 ```
 
 ## Estructura del proyecto
@@ -52,6 +56,14 @@ python expert/
 │   ├── engine.py, fuel_tank.py, wheel.py, person.py
 │   ├── color.py, car_type.py    # Enums
 │   └── constants.py
+├── dataclass/
+│   └── person.py                # Ejemplo de dataclass
+├── genericos/                   # Tipos y colecciones genéricas
+│   ├── 1-sample-generics-method.py
+│   ├── 1-sample-track-generics.py
+│   ├── customer.py, animal.py
+│   ├── car.py, machinery.py
+│   └── truck.py                 # Contenedor genérico iterable con capacidad
 ├── inheritance/                 # Herencia y polimorfismo
 │   ├── models/
 │   │   ├── person.py            # Clase base
@@ -78,6 +90,14 @@ python expert/
 │       ├── number_validator.py
 │       ├── length_validator.py
 │       └── not_none_validator.py
+├── thread/                      # Concurrencia con threading
+│   ├── name_thread.py           # Hilo personalizado
+│   ├── functions.py             # Impresión sincronizada con Lock
+│   ├── consumer.py
+│   ├── bakery/                  # Productor-consumidor con Condition
+│   ├── sample/                  # Thread, tareas, join y sincronización
+│   └── timer/
+│       └── sample_timer.py      # Tareas programadas con Timer
 ├── pyproject.toml
 └── README.md
 ```
@@ -177,6 +197,23 @@ flowchart LR
     rules --> errors[errors]
 ```
 
+### Genéricos (`genericos/`)
+
+Las prácticas usan `TypeVar`, `Generic` e `Iterable` para escribir funciones y
+contenedores que conservan el tipo de sus elementos. `from_array_to_list`
+convierte un iterable en una lista, y `Truck[T]` implementa un contenedor
+iterable con capacidad limitada para objetos como `Animal`, `Car` y `Machinery`.
+
+### Concurrencia (`thread/`)
+
+Los ejemplos exploran la creación de hilos mediante subclases de `Thread` y
+mediante `Thread(target=...)`, así como la consulta del hilo actual, el estado
+`is_alive()` y la espera con `join()`. También se muestra la sincronización de
+secciones críticas con `Lock` y el patrón productor-consumidor: `Baker` y
+`Consumer` comparten una `Bakery` que coordina la disponibilidad del pan con
+`Condition`. En `thread/timer/sample_timer.py`, `Timer` agenda ejecuciones
+repetidas de una tarea con un intervalo configurado.
+
 ## Temas cubiertos
 
 | Tema | Estado | Archivos |
@@ -191,6 +228,10 @@ flowchart LR
 | Clases abstractas (`abc.ABC`) | En curso | `abstract_class/form/form_element.py`, `abstract_class/validator/validator.py` |
 | Formularios HTML (herencia + composición) | En curso | `abstract_class/form/` (`InputForm`, `TextareaForm`, `SelectForm`) |
 | Validadores (estrategia sobre ABC) | En curso | `abstract_class/validator/` + `2_sample_form_validator.py` |
+| Genéricos (`TypeVar`, `Generic`, `Iterable`) | En curso | `genericos/` |
+| Concurrencia (`Thread`, tareas y `join`) | En curso | `thread/sample/`, `thread/name_thread.py` |
+| Sincronización (`Lock`, `Condition`) | En curso | `thread/functions.py`, `thread/bakery/` |
+| Temporizadores (`Timer`) | En curso | `thread/timer/sample_timer.py` |
 
 > Esta tabla se irá ampliando con nuevos temas del curso (estructuras de datos, funciones, excepciones, módulos, etc.).
 
@@ -200,6 +241,7 @@ flowchart LR
 - Los temas más grandes se agrupan en paquetes (`poo/`, `inheritance/`, `abstract_class/`).
 - En `inheritance/` y `abstract_class/` se usan imports de paquete; conviene ejecutarlos con `uv run -m`.
 - `FormElement` y `Validator` no se instancian: son clases abstractas. Las subclases implementan `draw_thml` e `is_valid`.
+- Las tareas de `thread/` pueden ejecutarse concurrentemente; `join()` permite esperar a que terminen y `Lock`/`Condition` coordinan el acceso a recursos compartidos.
 - Se prioriza código claro y comentado para el aprendizaje, no para producción.
 
 ## Notas
