@@ -6,7 +6,7 @@ from dataclasses import dataclass, field
 class PizzaProducto(ABC):
     _name: str
     _dough: str
-    _source: str
+    _sauce: str
     _ingredients: list[str] = field(default_factory=list)
 
     @property
@@ -16,7 +16,7 @@ class PizzaProducto(ABC):
     def prepare(self) -> None:
         print(
             f"Preparando {self._name}: masa={self._dough}, "
-            f"fuente={self._source}, ingredientes={self._ingredients}"
+            f"sauce={self.sauce}, ingredientes={self._ingredients}"
         )
 
     @abstractmethod
