@@ -16,7 +16,7 @@ class PizzaProducto(ABC):
     def prepare(self) -> None:
         print(
             f"Preparando {self._name}: masa={self._dough}, "
-            f"sauce={self.sauce}, ingredientes={self._ingredients}"
+            f"sauce={self._sauce}, ingredientes={self._ingredients}"
         )
 
     @abstractmethod
