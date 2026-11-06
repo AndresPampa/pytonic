@@ -14,5 +14,7 @@ class PizzeriaNewYorkFactory(PizzeriaZoneAbstractFactory):
                 return PizzaNewYorkPepperoni()
             case "italian":
                 return PizzaNewYorkItalian()
+            case "cheese":
+                return PizzaNewYorkItalian()
             case _:
                 return None
