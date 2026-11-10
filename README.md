@@ -50,6 +50,8 @@ uv run design_pattern/decorator/sample_decorator_coffee.py
 uv run design_pattern/decorator/text_decorator.py
 uv run design_pattern/factory/sample_factory.py
 uv run design_pattern/singleton/singleton.py
+uv run design_pattern/composite/sample-composite.py
+uv run design_pattern/observer/sample-observer-1.py
 uv run recursion/sample/sample-recursion.py
 ```
 
@@ -121,6 +123,10 @@ pytonic/
 │   │   ├── pizzeria_new_york_factory.py
 │   │   ├── pizzeria_zone_abstract_factory.py
 │   │   └── sample_factory.py
+│   ├── composite/
+│   │   └── sample-composite.py
+│   ├── observer/
+│   │   └── sample-observer-1.py
 │   └── singleton/
 │       └── singleton.py
 ├── recursion/                           # Recursión y árboles de componentes
@@ -159,6 +165,14 @@ El patrón `Factory` encapsula la creación de objetos dependiendo del tipo de p
 ### Singleton (`design_pattern/singleton/`)
 
 El patrón `Singleton` asegura que una clase tenga una sola instancia durante el ciclo de vida de la aplicación. El ejemplo `ConexionBD` simula un recurso compartido como una conexión a base de datos, evitando múltiples inicializaciones.
+
+### Composite (`design_pattern/composite/`)
+
+El patrón `Composite` permite tratar objetos individuales y grupos de objetos de manera uniforme. El ejemplo modela archivos y directorios: ambos implementan `Component`, y los directorios pueden contener otros componentes, mostrarlos recursivamente y buscar nombres dentro de su estructura.
+
+### Observer (`design_pattern/observer/`)
+
+El patrón `Observer` notifica a los suscriptores cuando cambia el estado de un objeto. En el ejemplo, los inversores se suscriben a distintas empresas y reciben una notificación cuando cambia su cotización; si el precio no cambia, no se envía ninguna actualización.
 
 ## Recursión (`recursion/`)
 
@@ -285,7 +299,7 @@ Los ejemplos exploran la creación de hilos mediante subclases de `Thread` y med
 | Concurrencia (`Thread`, tareas y `join`) | En curso | `thread/sample/`, `thread/name_thread.py` |
 | Sincronización (`Lock`, `Condition`) | En curso | `thread/functions.py`, `thread/bakery/` |
 | Temporizadores (`Timer`) | En curso | `thread/timer/sample_timer.py` |
-| Patrones de diseño (`Decorator`, `Factory`, `Singleton`) | En curso | `design_pattern/` |
+| Patrones de diseño (`Decorator`, `Factory`, `Singleton`, `Composite`, `Observer`) | En curso | `design_pattern/` |
 | Recursión sobre estructuras jerárquicas | En curso | `recursion/` |
 
 > Esta tabla se actualiza conforme se agregan nuevos temas al repositorio.
